@@ -1,0 +1,132 @@
+<form #enrollForm="ngForm" (ngSubmit)="onSubmit(enrollForm)">
+
+  <h1>Enrollment Request Form</h1>
+
+  <!-- Student Name -->
+  <label>Student Name</label><br>
+
+  <input
+    type="text"
+    name="studentName"
+    [(ngModel)]="studentName"
+    #nameCtrl="ngModel"
+    required
+    minlength="3">
+
+  <br>
+
+  <span *ngIf="nameCtrl.touched && nameCtrl.errors?.['required']">
+    Name is required
+  </span>
+
+  <span *ngIf="nameCtrl.touched && nameCtrl.errors?.['minlength']">
+    Name must be at least 3 characters
+  </span>
+
+  <br><br>
+
+  <!-- Student Email -->
+
+  <label>Student Email</label><br>
+
+  <input
+    type="email"
+    name="studentEmail"
+    [(ngModel)]="studentEmail"
+    #emailCtrl="ngModel"
+    required
+    email>
+
+  <br>
+
+  <span *ngIf="emailCtrl.touched && emailCtrl.errors?.['required']">
+    Email is required
+  </span>
+
+  <span *ngIf="emailCtrl.touched && emailCtrl.errors?.['email']">
+    Enter a valid email
+  </span>
+
+  <br><br>
+
+  <!-- Course ID -->
+
+  <label>Course ID</label><br>
+
+  <input
+    type="number"
+    name="courseId"
+    [(ngModel)]="courseId"
+    #courseCtrl="ngModel"
+    required>
+
+  <br>
+
+  <span *ngIf="courseCtrl.touched && courseCtrl.errors?.['required']">
+    Course ID is required
+  </span>
+
+  <br><br>
+
+  <!-- Preferred Semester -->
+
+  <label>Preferred Semester</label><br>
+
+  <select
+    name="preferredSemester"
+    [(ngModel)]="preferredSemester"
+    required>
+
+    <option value="">Select Semester</option>
+
+    <option>Odd</option>
+
+    <option>Even</option>
+
+  </select>
+
+  <br><br>
+
+  <!-- Agree -->
+
+  <input
+    type="checkbox"
+    name="agreeToTerms"
+    [(ngModel)]="agreeToTerms"
+    #agreeCtrl="ngModel"
+    required>
+
+  <label>I Agree to the Terms</label>
+
+  <br>
+
+  <span *ngIf="agreeCtrl.touched && agreeCtrl.invalid">
+    Please accept the terms.
+  </span>
+
+  <br><br>
+
+  <!-- Success Message -->
+
+  <div *ngIf="submitted">
+    ✅ Enrollment request submitted successfully!
+  </div>
+
+  <br>
+
+  <button
+    type="submit"
+    [disabled]="enrollForm.invalid">
+
+    Submit
+
+  </button>
+
+  <button
+    type="button"
+    (click)="resetForm(enrollForm)">
+    Reset
+
+  </button>
+
+</form>

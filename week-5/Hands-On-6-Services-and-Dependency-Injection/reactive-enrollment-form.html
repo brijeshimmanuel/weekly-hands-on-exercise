@@ -1,0 +1,141 @@
+<form
+  [formGroup]="enrollForm"
+  (ngSubmit)="onSubmit()">
+
+  <h1>Reactive Enrollment Form</h1>
+
+  <!-- Student Name -->
+
+  <label>Student Name</label><br>
+
+  <input
+    type="text"
+    formControlName="studentName">
+
+  <br><br>
+
+  <!-- Student Email -->
+
+  <label>Student Email</label><br>
+
+  <input
+    type="email"
+    formControlName="studentEmail">
+
+  <br>
+
+  <span
+    *ngIf="enrollForm.get('studentEmail')?.errors?.['emailTaken']">
+
+    Email already exists.
+
+  </span>
+
+  <br><br>
+
+  <!-- Course ID -->
+
+  <label>Course ID</label><br>
+
+  <input
+    type="text"
+    formControlName="courseId">
+
+  <br>
+
+  <span
+    *ngIf="enrollForm.get('courseId')?.errors?.['required'] &&
+           enrollForm.get('courseId')?.touched">
+
+    Course ID is required.
+
+  </span>
+
+  <br>
+
+  <span
+    *ngIf="enrollForm.get('courseId')?.errors?.['noCourseCode'] &&
+           enrollForm.get('courseId')?.touched">
+
+    Course code starting with XX is not allowed.
+
+  </span>
+
+  <br><br>
+
+  <!-- Preferred Semester -->
+
+  <label>Preferred Semester</label><br>
+
+  <select
+    formControlName="preferredSemester">
+
+    <option>Odd</option>
+    <option>Even</option>
+
+  </select>
+
+  <br><br>
+
+  <!-- Agree To Terms -->
+
+  <input
+    type="checkbox"
+    formControlName="agreeToTerms">
+
+  <label>I Agree to the Terms</label>
+
+  <br><br>
+
+  <!-- Add Another Course -->
+
+  <button
+    type="button"
+    (click)="addCourse()">
+
+    Add Another Course
+
+  </button>
+
+  <br><br>
+
+  <!-- Dynamic Course Inputs -->
+
+  <h3>Additional Courses</h3>
+
+<div formArrayName="additionalCourses">
+
+  <div *ngFor="let ctrl of additionalCourses.controls; let i = index">
+
+    <label>Course {{ i + 1 }}</label><br>
+
+    <input
+      [formControlName]="i">
+
+    <button
+      type="button"
+      (click)="removeCourse(i)">
+
+      Remove
+
+    </button>
+
+    <br><br>
+
+  </div>
+
+</div>
+
+  <br><br>
+
+  <!-- Submit -->
+
+  <button
+    type="submit"
+    [disabled]="enrollForm.invalid">
+
+    Submit
+
+  </button>
+
+</form>
